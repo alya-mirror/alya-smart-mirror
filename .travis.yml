@@ -11,3 +11,12 @@ cache:
 before_script:
   - npm run linter
   - npm run test
+
+addons:
+  apt:
+    packages:
+      - xvfb
+
+install:
+  - export DISPLAY=':99.0'
+  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
