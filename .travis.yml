@@ -8,7 +8,7 @@ cache:
     - node_modules
     - bower_components
 
-before_script:
+script:
   - npm run linter
   - npm run test
 
