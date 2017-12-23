@@ -10,7 +10,7 @@
     "install": "bower install",
     "start": "electron main.js ",
     "test": "./node_modules/karma/bin/karma start karma.conf.js",
-    "linter": "./node_modules/.bin/eslint . --ignore-path .gitignore"
+    "linter": "./node_modules/eslint/bin/eslint.js ."
   },
   "repository": {
     "type": "git",
