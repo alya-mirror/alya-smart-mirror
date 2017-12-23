@@ -2,6 +2,21 @@ language: node_js
 node_js:
   - "6"
 
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - xvfb
+      - g++-4.8
+
+env:
+  - CXX=g++-4.8 NODE_ENV=testing
+
+install:
+  - export DISPLAY=':99.0'
+  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
+
 # Cache node dependencies
 cache:
   directories:
@@ -11,12 +26,3 @@ cache:
 script:
   - npm run linter
   - npm run test
-
-addons:
-  apt:
-    packages:
-      - xvfb
-
-install:
-  - export DISPLAY=':99.0'
-  - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
