@@ -21,7 +21,6 @@ cache:
     - node_modules
 
 script:
-  - yarn linter
   - yarn test
 
 addons:

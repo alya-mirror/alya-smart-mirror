@@ -26,7 +26,6 @@
   "homepage": "./",
   "main": "public/electron.js",
   "scripts": {
-    "linter": "./node_modules/eslint/bin/eslint.js .",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
