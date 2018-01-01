@@ -16,6 +16,7 @@ install:
 
 # Cache node dependencies
 cache:
+  yarn: true
   directories:
     - node_modules
 
