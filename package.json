@@ -36,7 +36,7 @@
     "release": "yarn build && electron-builder -mwl --em.main=build/electron.js --publish=never"
   },
   "dependencies": {
-    "ASM-date-time": "git+ssh://git@github.com:alronz/ASM-date-time.git",
+    "asm-date-time": "^0.0.1",
     "electron-is-dev": "^0.3.0",
     "electron-log": "^2.2.13",
     "electron-updater": "^2.17.8",

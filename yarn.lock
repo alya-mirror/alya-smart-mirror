@@ -26,12 +26,6 @@
   version "7.0.51"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-7.0.51.tgz#1fb9bd2c7d28b1e8b1fe438f01494d0da8e451af"
 
-"ASM-date-time@git+ssh://git@github.com:alronz/ASM-date-time.git":
-  version "0.0.1"
-  resolved "git+ssh://git@github.com:alronz/ASM-date-time.git#858ec8b97cf9a26d57f15197a533248c61ba7246"
-  dependencies:
-    moment "^2.20.1"
-
 abab@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.4.tgz#5faad9c2c07f60dd76770f71cf025b62a63cfd4e"
@@ -291,6 +285,12 @@ asar-integrity@0.2.3:
   dependencies:
     bluebird-lst "^1.0.5"
     fs-extra-p "^4.4.4"
+
+asm-date-time@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/asm-date-time/-/asm-date-time-0.0.1.tgz#56da0695bc5300e7a9ae5dd5ad587bbb3a8ab47e"
+  dependencies:
+    moment "^2.20.1"
 
 asn1.js@^4.0.0:
   version "4.9.2"
