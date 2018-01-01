@@ -8,17 +8,18 @@ A Personalized Smart Mirror
 
 ## Installation
 
-- `npm install`
-- `npm run start`
+- `yarn`
 
 ## Documentation
 Check out the documentation for more information:
 
 ## Development and Contributing
 
-- `npm run linter`
-- `npm run test`
-- `npm run start dev`
+- `yarn linter`
+- `yarn test`
+- `yarn dev`
+- `yarn pack`
+- `yarn release`
 
 ## License
 MIT

@@ -3,14 +3,7 @@
   "version": "0.0.1",
   "description": "A personalized smart mirror",
   "engines": {
-    "node": ">=6.0.0"
-  },
-  "main": "main.js",
-  "scripts": {
-    "install": "bower install",
-    "start": "electron main.js ",
-    "test": "./node_modules/karma/bin/karma start karma.conf.js",
-    "linter": "./node_modules/eslint/bin/eslint.js ."
+    "node": ">=8.0.0"
   },
   "repository": {
     "type": "git",
@@ -20,40 +13,51 @@
     "Smart Mirror",
     "Personalized"
   ],
-  "authors": [
-    {
-      "name": "Bilal Al-Saeedi",
-      "email": "alronz.bilal@gmail.com",
-      "url": ""
-    }
-  ],
+  "author": {
+    "name": "Bilal Al-Saeedi",
+    "email": "alronz.bilal@gmail.com",
+    "url": ""
+  },
+  "contributors": [],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/alronz/alya-smart-mirror/issues"
   },
-  "homepage": "https://github.com/alronz/alya-smart-mirror",
+  "homepage": "./",
+  "main": "public/electron.js",
+  "scripts": {
+    "linter": "./node_modules/eslint/bin/eslint.js .",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "dev": "concurrently \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "pack": "yarn build && electron-builder -mwl --em.main=build/electron.js",
+    "release": "yarn build && electron-builder -mwl --em.main=build/electron.js --publish=never"
+  },
+  "dependencies": {
+    "ASM-date-time": "git+ssh://git@github.com:alronz/ASM-date-time.git",
+    "electron-is-dev": "^0.3.0",
+    "electron-log": "^2.2.13",
+    "electron-updater": "^2.17.8",
+    "node-notifier": "^5.1.2",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  },
   "devDependencies": {
-    "angular": "^1.6.8",
-    "angular-i18n": "^1.5.5",
-    "bower": "^1.7.9",
-    "electron": "^1.4.4",
+    "concurrently": "^3.5.1",
+    "cross-env": "^5.1.3",
+    "electron": "^1.7.10",
+    "electron-builder": "^19.49.4",
     "eslint": "^3.18.0",
     "eslint-config-airbnb-base": "^11.1.1",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-json": "^1.2.0",
     "eslint-plugin-node": "^4.2.1",
-    "jasmine-core": "^2.8.0",
-    "karma": "^2.0.0",
-    "karma-chrome-launcher": "^2.2.0",
-    "karma-electron": "^5.2.2",
-    "karma-jasmine": "^1.1.1"
+    "react-scripts": "1.0.17",
+    "wait-on": "^2.0.2"
   },
-  "dependencies": {
-    "angular-moment": "^1.0.1",
-    "electron-json-storage": "2.0.0",
-    "express": "^4.14.0",
-    "moment": "^2.17.1",
-    "socket.io": "^1.6.0",
-    "request-promise": "^4.2.1"
+  "build": {
+    "appId": "alya-smart-mirror.id"
   }
 }
