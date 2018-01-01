@@ -5,28 +5,23 @@ language: node_js
 node_js:
    - "6"
    - "7"
-
-env:
-   - NODE_ENV=development
+   - "8"
 
 before_install:
     - export DISPLAY=':99.0'
     - Xvfb :99 -screen 0 1024x768x24 > /dev/null 2>&1 &
 
 install:
-    - npm install -g bower
-    - npm install
-    - bower install
+    - yarn
 
 # Cache node dependencies
 cache:
   directories:
     - node_modules
-    - bower_components
 
 script:
-  - npm run linter
-  - npm run test
+  - yarn linter
+  - yarn test
 
 addons:
   apt:
