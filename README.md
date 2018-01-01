@@ -15,7 +15,6 @@ Check out the documentation for more information:
 
 ## Development and Contributing
 
-- `yarn linter`
 - `yarn test`
 - `yarn dev`
 - `yarn pack`
