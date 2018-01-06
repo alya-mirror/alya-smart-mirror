@@ -16,11 +16,11 @@ install:
 
 # Cache node dependencies
 cache:
+  yarn: true
   directories:
     - node_modules
 
 script:
-  - yarn linter
   - yarn test
 
 addons:
