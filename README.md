@@ -1,10 +1,10 @@
 # Alya - The Personalized Smart Mirror
 
-<p align="center">
 A Personalized Smart Mirror
-</p>
 
 
+## Setup amazon IoT
+Alya smart mirror is connect to Amazon IoT to send and receive voice/face recognition or sensor events. Please setup the service in AWS and put the certificates inside `certs` folder and configurations inside `configs/config.defaults.json`.
 
 ## Installation
 
