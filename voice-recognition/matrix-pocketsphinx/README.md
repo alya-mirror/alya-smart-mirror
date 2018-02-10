@@ -39,20 +39,28 @@ Please make sure that the amazon IoT service is configured as explained [here](.
 
 ## Run 
 
-- clone and go to right folder:
+1. clone project:
 
 ``` 
 git clone https://github.com/alronz/alya-smart-mirror.git
-cd voice-recognition/matrix-pocketsphinx
 ```
 
-- install packages
+2. install packages
+
+- first general dependencies:
 
 ```
 npm install
 ```
 
-- generate assets
+- then this project dependencies:
+
+```
+cd voice-recognition/matrix-pocketsphinx
+npm install
+```
+
+3. generate assets
 
  ``` 
   npm install -g https://github.com/matrix-io/lmtool-cli.git
@@ -60,7 +68,7 @@ npm install
   tar xf <generated_file>.tgz -C assets
   ```
 
-- change assets path in `config.defaults.json` :
+4. change assets path in `config.defaults.json` :
 
 ```json
 {
@@ -69,7 +77,7 @@ npm install
 }
 ```
 
-- start:
+5. start:
 
 ```
 node index.js
