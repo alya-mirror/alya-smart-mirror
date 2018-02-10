@@ -60,11 +60,13 @@ npm install
   tar xf <generated_file>.tgz -C assets
   ```
 
-- change assets path in `index.js`:
+- change assets path in `config.defaults.json` :
 
-```nodejs
-const LM_PATH = __dirname + '/assets/9854.lm';
-const DIC_PATH = __dirname + '/assets/9854.dic';
+```json
+{
+  "lmFileName": "1161.lm",
+  "dicFileName": "1161.dic"
+}
 ```
 
 - start:
@@ -95,9 +97,11 @@ say some voice commands: `alya hi` for example:
   tar xf <generated_file>.tgz -C assets
   ```
   
-3- change the corresponding names inside `index.js` :
+3- change the corresponding names inside `config.defaults.json` :
 
-```nodejs
-const LM_PATH = __dirname + '/assets/9854.lm';
-const DIC_PATH = __dirname + '/assets/9854.dic';
+```json
+{
+  "lmFileName": "1161.lm",
+  "dicFileName": "1161.dic"
+}
 ```
