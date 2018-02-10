@@ -21,5 +21,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .idea
+certs/*
+!certs/.gitkeep
 
 *.tgz
+*.iml
+voice-recognition/matrix-pocketsphinx/assets/*
+!voice-recognition/matrix-pocketsphinx/assets/commands.txt

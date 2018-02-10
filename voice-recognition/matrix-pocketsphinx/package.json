@@ -1,0 +1,13 @@
+{
+  "name": "alya-matrix-voice-recognition",
+  "description": "App to do offline voice recognition using Matrix Creator",
+  "version": "0.0.1",
+  "devDependencies": {
+    "zmq": "*",
+    "mic": "*"
+  },
+  "dependencies": {
+    "matrix-protos": "0.0.11",
+    "aws-iot-device-sdk": "^2.2.0"
+  }
+}
