@@ -16,12 +16,19 @@ const creator_everloop_base_port = 20013 + 8; // port for Everloop driver.
 const matrix_io = require('matrix-protos').matrix_io;
 const zmq = require('zmq');
 
-const LM_PATH = __dirname + '/assets/9854.lm';
-const DIC_PATH = __dirname + '/assets/9854.dic';
 
-const AWSIoTClient = require('../../utils/AWSIotClient');
-const config = require('../../configs/config.defaults');
-const awsIotClient = new AWSIoTClient(config);
+const config = require('./config.defaults');
+const LM_PATH = __dirname + `/assets/${config.lmFileName}`;
+const DIC_PATH = __dirname + `/assets/${config.dicFileName}`;
+
+const path = require('path');
+const certsFolderPath = path.resolve('../../certs');
+const AWSIoTClient = require('../../utils/AWSIoTClient');
+const appConfig = require('../../configs/config.defaults');
+const awsIoTClient = new AWSIoTClient();
+awsIoTClient.connect(appConfig.awsIoTConfigs, certsFolderPath).then(() => {
+  console.log("connection to amazon IoT established.")
+});
 
 const configSocket = zmq.socket('push');
 configSocket.connect('tcp://' + creator_ip + ':' + creator_wakeword_base_port /* config */);
@@ -78,12 +85,11 @@ updateSocket.on('message', function (wakeword_buffer) {
   }, 1000);
 
   // send to amazon IoT
-  awsIotClient.publish("voice-command", {
+  awsIoTClient.publish("voice-command", {
     "command": wakeWordData.wakeWord
   }, {}, function () {
-    console.log(`message ${wakeWordData.wakeWord} sent to IoT successfully`)
+    console.log(`message sent to IoT successfully, message: ${wakeWordData.wakeWord}`)
   });
-
 });
 
 /**************************************

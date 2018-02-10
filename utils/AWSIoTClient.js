@@ -1,12 +1,10 @@
 'use strict';
 
 const awsIot = require("aws-iot-device-sdk");
-const path = require('path');
-const certsFolderPath = path.resolve('certs');
 
 class IOTClient {
 
-  connect(configs) {
+  connect(configs, certsFolderPath) {
     return new Promise((resolve, reject) => {
       this.device = awsIot.device({
         keyPath: `${certsFolderPath}/${configs.keyFileName}`,
@@ -33,8 +31,17 @@ class IOTClient {
     });
   }
 
+  subscribe(topic, options, listenerFunction, caller) {
+    this.device.subscribe(topic, options, () => {
+      console.log("Subscribed: " + topic);
+      this.device.on('message', (topic, payload) => {
+        listenerFunction(topic, payload, caller);
+      });
+    });
+  }
+
   publish(topic, message, options, callback) {
-    this.device.publish(topic, JSON.stringify(message), options, function (err) {
+    this.device.publish(topic, JSON.stringify(message), options, (err) => {
       if (!err) {
         console.log("published successfully: " + topic);
       }

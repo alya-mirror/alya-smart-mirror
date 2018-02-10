@@ -41,7 +41,8 @@
     "electron-updater": "^2.17.8",
     "node-notifier": "^5.1.2",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "aws-iot-device-sdk": "^2.2.0"
   },
   "devDependencies": {
     "concurrently": "^3.5.1",
