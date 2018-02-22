@@ -28,3 +28,6 @@ certs/*
 *.iml
 voice-recognition/matrix-pocketsphinx/assets/*
 !voice-recognition/matrix-pocketsphinx/assets/commands.txt
+visual-recognition/matrix-face-recognition/node_modules/
+
+visual-recognition/matrix-face-recognition/utils/certs/
