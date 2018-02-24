@@ -3,7 +3,6 @@ const uuid = require('uuid/v1');
 const AWSIoTClient = require('./utils/AWSIoTClient');
 const appConfig = require('./configs/config.defaults');
 const awsIoTClient = new AWSIoTClient();
-const timeout = 5;
 let lightingInterval;
 const colors = [
   'red',
@@ -29,7 +28,7 @@ function alongtime(n) {
 
 function stopRecognitionService() {
   console.log('stop recognition');
-  matrix.service('recognition', {timeout: timeout}).stop();
+  matrix.service('recognition').stop();
   // a workaround to avoid the problem in the matrix os where process.on('message') create duplicates listeners
   // https://github.com/matrix-io/matrix-os/issues/108
   process.removeAllListeners('message');
@@ -94,12 +93,12 @@ function listTags() {
   return showColor('orange')
     .then(() => {
       try {
-        matrix.service('recognition', {timeout: timeout}).getTags()
+        matrix.service('recognition').getTags()
           .then((tags) => {
             sendIAWSIoTMessage('recognition-tags', {status: 'success', tags: tags});
           })
-      } catch (err) {
-        console.log('listTags - something went wrong, error: ' + err);
+      } catch (error) {
+        console.log('listTags - something went wrong, error: ' + error);
         sendIAWSIoTMessage('recognition-tags', {status: 'failed'});
       }
     })
@@ -110,9 +109,9 @@ function resetTag(payload) {
   return showColor('orange')
     .then(() => {
       try {
-        matrix.service('recognition', {timeout: timeout}).untrain(payload.tag);
+        matrix.service('recognition').untrain(payload.tag);
         sendIAWSIoTMessage('recognition-resetTag', {status: 'success', tags: [payload.tag]});
-      } catch (err) {
+      } catch (error) {
         console.log('reset tag - something went wrong, error: ' + error);
         sendIAWSIoTMessage('recognition-resetTag', {status: 'failed'});
       }
@@ -125,23 +124,24 @@ function train(payload) {
   return showColor('orange')
     .then(() => {
       try {
-        matrix.service('recognition', {timeout: timeout})
-          .train(payload.tag).then((data) => {
-          console.log('train - train data: ' + JSON.stringify(data));
-          if (!trained && data.hasOwnProperty('count')) {
-            console.log('training partially done');
-            // means it's partially done
-            matrix.led({
-              arc: Math.round(360 * (data.count / data.target)),
-              color: 'blue',
-              start: 0
-            }).render();
-          } else if (!trained) {
-            trained = true;
-            sendIAWSIoTMessage('recognition-trained', {status: 'success', results: data});
-          }
-        })
-      } catch (err) {
+        matrix.service('recognition')
+          .train(payload.tag)
+          .then((data) => {
+            console.log('train - train data: ' + JSON.stringify(data));
+            if (!trained && data.hasOwnProperty('count')) {
+              console.log('training partially done');
+              // means it's partially done
+              matrix.led({
+                arc: Math.round(360 * (data.count / data.target)),
+                color: 'blue',
+                start: 0
+              }).render();
+            } else if (!trained) {
+              trained = true;
+              sendIAWSIoTMessage('recognition-trained', {status: 'success', results: data});
+            }
+          })
+      } catch (error) {
         console.log('train - something went wrong, error: ' + error);
         sendIAWSIoTMessage('recognition-trained', {status: 'failed'});
       }
@@ -154,20 +154,21 @@ function recognize(payload) {
   return showColor('orange')
     .then(() => {
       try {
-        matrix.service('recognition', {timeout: timeout})
-          .start(payload.tag).then((data) => {
-          console.log('recognize - data', data);
-          let minDistanceFace = _.values(data.matches);
-          minDistanceFace = _.sortBy(minDistanceFace, ['score'])[0];
-          if (minDistanceFace.score < 0.85) {
-            sendIAWSIoTMessage('recognition-recognized', {status: 'success', results: data});
-          } else {
-            console.log('recognize - not recognized');
-            sendIAWSIoTMessage('recognition-recognized', {status: 'failed'});
-            stopLights();
-          }
-        })
-      } catch (err) {
+        matrix.service('recognition')
+          .start(payload.tag)
+          .then((data) => {
+            console.log('recognize - data', data);
+            let minDistanceFace = _.values(data.matches);
+            minDistanceFace = _.sortBy(minDistanceFace, ['score'])[0];
+            if (minDistanceFace.score < 0.85) {
+              sendIAWSIoTMessage('recognition-recognized', {status: 'success', results: data});
+            } else {
+              console.log('recognize - not recognized');
+              sendIAWSIoTMessage('recognition-recognized', {status: 'failed'});
+              stopLights();
+            }
+          })
+      } catch (error) {
         stopLights();
         console.log('recognize - something went wrong, error: ' + error);
         sendIAWSIoTMessage('recognition-recognized', {status: 'failed'});
@@ -180,19 +181,19 @@ function resetAll() {
   return showColor('orange')
     .then(() => {
       try {
-        matrix.service('recognition', {timeout: timeout}).getTags()
+        matrix.service('recognition').getTags()
           .then((tags) => {
             console.log('resetAll - tags:', JSON.stringify(tags));
             const promises = Object.keys(tags).map((key) => {
               console.log('remove', key);
-              return matrix.service('recognition', {timeout: timeout}).untrain(tags[key]);
+              return matrix.service('recognition').untrain(tags[key]);
             });
             return Promise.all(promises);
           })
           .then(() => {
             sendIAWSIoTMessage('recognition-resetAll', {status: 'success'});
-          });
-      } catch (err) {
+          })
+      } catch (error) {
         console.log('resetAll - something went wrong, error: ' + error);
         sendIAWSIoTMessage('recognition-resetAll', {status: 'failed'});
       }

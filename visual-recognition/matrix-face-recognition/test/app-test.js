@@ -34,20 +34,6 @@ describe('App', function () {
       });
     });
   });
-  it("sent train request and received train results", (done) => {
-    awsIoTClient.publish("train", {
-      message: 'Please start training for tag',
-      tag: 'alya-test-face'
-    }, {}, () => {
-      console.log(`message sent to IoT successfully`);
-      awsIoTClient.onMessage((topic, payload) => {
-        if (topic === 'recognition-trained') {
-          console.log(`trained data : ${payload}`);
-          done();
-        }
-      });
-    });
-  });
   it("sent reset tag request and received confirmation", (done) => {
     awsIoTClient.publish("resetTag", {
       message: 'Please start reset for tag',
@@ -70,6 +56,20 @@ describe('App', function () {
       awsIoTClient.onMessage((topic, payload) => {
         if (topic === 'recognition-resetAll') {
           console.log(`resetTag payload : ${payload}`);
+          done();
+        }
+      });
+    });
+  });
+  it("sent train request and received train results", (done) => {
+    awsIoTClient.publish("train", {
+      message: 'Please start training for tag',
+      tag: 'alya-test-face'
+    }, {}, () => {
+      console.log(`message sent to IoT successfully`);
+      awsIoTClient.onMessage((topic, payload) => {
+        if (topic === 'recognition-trained') {
+          console.log(`trained data : ${payload}`);
           done();
         }
       });
