@@ -32,3 +32,7 @@ visual-recognition/matrix-face-recognition/node_modules/
 
 visual-recognition/matrix-face-recognition/utils/certs/*
 !visual-recognition/matrix-face-recognition/utils/certs/.gitkeep
+sensors-data/matrix-sensor-data/node_modules/
+
+sensors-data/matrix-sensor-data/utils/certs/*
+!sensors-data/matrix-sensor-data/utils/certs/.gitkeep
