@@ -1,0 +1,1 @@
+# Alya Visual Recognition core
