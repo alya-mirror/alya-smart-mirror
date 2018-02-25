@@ -1,0 +1,16 @@
+configVersion: 2
+
+description: alya matrix sensor data
+keywords: alya
+name: matrix-sensor-data
+displayName: AlyaMatrixSensorData
+
+sensors:
+  - temperature
+  - humidity
+  - magnetometer
+  - accelerometer
+  - gyroscope
+  - uv
+  - pressure
+  - altitude

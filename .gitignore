@@ -28,3 +28,7 @@ certs/*
 *.iml
 voice-recognition/matrix-pocketsphinx/assets/*
 !voice-recognition/matrix-pocketsphinx/assets/commands.txt
+sensors-data/matrix-sensor-data/node_modules/
+
+sensors-data/matrix-sensor-data/utils/certs/*
+!sensors-data/matrix-sensor-data/utils/certs/.gitkeep
