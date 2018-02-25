@@ -14,3 +14,11 @@ sensors:
   - uv
   - pressure
   - altitude
+
+services:
+  faceDetection:
+    engine: detection
+    type: face
+  facelytics:
+    engine: detection
+    type: demographics
