@@ -2,19 +2,14 @@ const config = require('../configs/config.defaults');
 const AWSIoTClient = require('../utils/AWSIoTClient');
 const uuid = require('uuid/v1');
 
-const awsIoTClient  = new AWSIoTClient();
+const awsIoTClient = new AWSIoTClient();
 awsIoTClient.connect(config.awsIoTConfigs, uuid())
   .then(() => {
-    awsIoTClient.subscribe('recognition-tags');
-    awsIoTClient.subscribe('recognition-trained');
-    awsIoTClient.subscribe('recognition-resetTag');
-    awsIoTClient.subscribe('recognition-resetAll');
-    awsIoTClient.subscribe('recognition-trained');
-    awsIoTClient.subscribe('recognition-recognized');
+    awsIoTClient.subscribe('alya-data');
   });
 
 describe('App', function () {
-  this.timeout(20000);
+  this.timeout(120000);
   beforeEach(() => {
   });
 
@@ -22,68 +17,78 @@ describe('App', function () {
   });
 
   it("sent get tags request and received tags", (done) => {
-    awsIoTClient.publish("listTags", {
-      "message": 'Please list tags'
+    awsIoTClient.publish('alya-commands', {
+      commandType: 'matrix-recognition-list-tags'
     }, {}, () => {
       console.log(`message sent to IoT successfully`);
       awsIoTClient.onMessage((topic, payload) => {
-        if (topic === 'recognition-tags') {
-          console.log(`tags : ${payload}`);
+        console.log(`topic: ${topic}`);
+        console.log(`payload: ${payload}`);
+        payload = JSON.parse(payload);
+        if (topic === 'alya-data' && payload.dataType === 'matrix-recognition-list-tags') {
           done();
         }
       });
     });
   });
   it("sent reset tag request and received confirmation", (done) => {
-    awsIoTClient.publish("resetTag", {
-      message: 'Please start reset for tag',
-      tag: 'alya-test-face'
+    awsIoTClient.publish('alya-commands', {
+      commandType: 'matrix-recognition-reset-tag',
+      tag: 'alya-test-user'
     }, {}, () => {
       console.log(`message sent to IoT successfully`);
       awsIoTClient.onMessage((topic, payload) => {
-        if (topic === 'recognition-resetTag') {
-          console.log(`resetTag data : ${payload}`);
+        console.log(`topic: ${topic}`);
+        console.log(`payload: ${payload}`);
+        payload = JSON.parse(payload);
+        if (topic === 'alya-data' && payload.dataType === 'matrix-recognition-reset-tag') {
           done();
         }
       });
     });
   });
   it("sent reset all request and received confirmation", (done) => {
-    awsIoTClient.publish("resetAll", {
-      message: 'Please start reset all tags'
+    awsIoTClient.publish('alya-commands', {
+      commandType: 'matrix-recognition-reset-all'
     }, {}, () => {
       console.log(`message sent to IoT successfully`);
       awsIoTClient.onMessage((topic, payload) => {
-        if (topic === 'recognition-resetAll') {
-          console.log(`resetTag payload : ${payload}`);
+        console.log(`topic: ${topic}`);
+        console.log(`payload: ${payload}`);
+        payload = JSON.parse(payload);
+        if (topic === 'alya-data' && payload.dataType === 'matrix-recognition-reset-all') {
           done();
         }
       });
     });
   });
   it("sent train request and received train results", (done) => {
-    awsIoTClient.publish("train", {
-      message: 'Please start training for tag',
-      tag: 'alya-test-face'
+    awsIoTClient.publish('alya-commands', {
+      commandType: 'matrix-recognition-train',
+      tag: 'alya-test-user'
     }, {}, () => {
       console.log(`message sent to IoT successfully`);
       awsIoTClient.onMessage((topic, payload) => {
-        if (topic === 'recognition-trained') {
-          console.log(`trained data : ${payload}`);
+        console.log(`topic: ${topic}`);
+        console.log(`payload: ${payload}`);
+        payload = JSON.parse(payload);
+        if (topic === 'alya-data' && payload.dataType === 'matrix-recognition-train') {
           done();
         }
       });
     });
   });
   it("sent recognize request and received confirmation", (done) => {
-    awsIoTClient.publish("recognize", {
-      message: 'Please start recognize',
-      tag: 'alya-test-face'
+    awsIoTClient.publish('alya-commands', {
+      commandType: 'matrix-recognition-recognize',
+      tag: 'alya-test-user'
     }, {}, () => {
       console.log(`message sent to IoT successfully`);
       awsIoTClient.onMessage((topic, payload) => {
-        if (topic === 'recognition-recognized') {
-          console.log(`recognized data: ${payload}`);
+        console.log(`topic: ${topic}`);
+        console.log(`payload: ${payload}`);
+        payload = JSON.parse(payload);
+        if (topic === 'alya-data' && payload.dataType === 'matrix-recognition-recognize') {
           done();
         }
       });

@@ -94,12 +94,12 @@ function listTags() {
     .then(() => {
       try {
         matrix.service('recognition').getTags()
-          .then((tags) => {
-            sendIAWSIoTMessage('recognition-tags', {status: 'success', tags: tags});
+          .then((data) => {
+            sendIAWSIoTMessage('alya-data', {dataType: 'matrix-recognition-list-tags', status: 'success', data: data});
           })
       } catch (error) {
         console.log('listTags - something went wrong, error: ' + error);
-        sendIAWSIoTMessage('recognition-tags', {status: 'failed'});
+        sendIAWSIoTMessage('alya-data', {dataType: 'matrix-recognition-list-tags', status: 'failed'});
       }
     })
 }
@@ -110,10 +110,10 @@ function resetTag(payload) {
     .then(() => {
       try {
         matrix.service('recognition').untrain(payload.tag);
-        sendIAWSIoTMessage('recognition-resetTag', {status: 'success', tags: [payload.tag]});
+        sendIAWSIoTMessage('alya-data', {dataType: 'matrix-recognition-reset-tag', status: 'success'});
       } catch (error) {
         console.log('reset tag - something went wrong, error: ' + error);
-        sendIAWSIoTMessage('recognition-resetTag', {status: 'failed'});
+        sendIAWSIoTMessage('alya-data', {dataType: 'matrix-recognition-reset-tag', status: 'failed'});
       }
     })
 }
@@ -138,12 +138,17 @@ function train(payload) {
               }).render();
             } else if (!trained) {
               trained = true;
-              sendIAWSIoTMessage('recognition-trained', {status: 'success', results: data});
+              sendIAWSIoTMessage('alya-data', {dataType: 'matrix-recognition-train', status: 'success', data: data});
             }
-          })
+          });
+        // kill if not trained with a 3 minutes
+        setTimeout(() => {
+          console.log('killing recognition since it took so much time.')
+          clear()
+        }, 180000)
       } catch (error) {
         console.log('train - something went wrong, error: ' + error);
-        sendIAWSIoTMessage('recognition-trained', {status: 'failed'});
+        sendIAWSIoTMessage('alya-data', {dataType: 'matrix-recognition-train', status: 'failed'});
       }
     });
 }
@@ -161,17 +166,21 @@ function recognize(payload) {
             let minDistanceFace = _.values(data.matches);
             minDistanceFace = _.sortBy(minDistanceFace, ['score'])[0];
             if (minDistanceFace.score < 0.85) {
-              sendIAWSIoTMessage('recognition-recognized', {status: 'success', results: data});
+              sendIAWSIoTMessage('alya-data', {
+                dataType: 'matrix-recognition-recognize',
+                status: 'success',
+                data: data
+              });
             } else {
               console.log('recognize - not recognized');
-              sendIAWSIoTMessage('recognition-recognized', {status: 'failed'});
+              sendIAWSIoTMessage('alya-data', {dataType: 'matrix-recognition-recognize', status: 'failed'});
               stopLights();
             }
           })
       } catch (error) {
         stopLights();
         console.log('recognize - something went wrong, error: ' + error);
-        sendIAWSIoTMessage('recognition-recognized', {status: 'failed'});
+        sendIAWSIoTMessage('alya-data', {dataType: 'matrix-recognition-recognize', status: 'failed'});
       }
     })
 }
@@ -191,11 +200,11 @@ function resetAll() {
             return Promise.all(promises);
           })
           .then(() => {
-            sendIAWSIoTMessage('recognition-resetAll', {status: 'success'});
+            sendIAWSIoTMessage('alya-data', {dataType: 'matrix-recognition-reset-all', status: 'success'});
           })
       } catch (error) {
         console.log('resetAll - something went wrong, error: ' + error);
-        sendIAWSIoTMessage('recognition-resetAll', {status: 'failed'});
+        sendIAWSIoTMessage('alya-data', {dataType: 'matrix-recognition-reset-all', status: 'failed'});
       }
     })
 }
@@ -205,30 +214,28 @@ function start() {
     .then(() => showColor('cyan'))
     .then(() => awsIoTClient.connect(appConfig.awsIoTConfigs, uuid()))
     .then(() => {
-      awsIoTClient.subscribe('listTags');
-      awsIoTClient.subscribe('recognize');
-      awsIoTClient.subscribe('train');
-      awsIoTClient.subscribe('resetTag');
-      awsIoTClient.subscribe('resetAll');
+      awsIoTClient.subscribe('alya-commands');
       awsIoTClient.onMessage((topic, payload) => {
         payload = JSON.parse(payload.toString());
-        console.log('listenerFunction - message received', topic, payload);
-        switch (topic) {
-          case 'listTags':
-            listTags();
-            break;
-          case 'recognize':
-            recognize(payload);
-            break;
-          case 'train':
-            train(payload);
-            break;
-          case 'resetTag':
-            resetTag(payload);
-            break;
-          case 'resetAll':
-            resetAll();
-            break;
+        console.log('start - message received', topic, payload);
+        if (topic === 'alya-commands') {
+          switch (payload.commandType) {
+            case 'matrix-recognition-list-tags':
+              listTags();
+              break;
+            case 'matrix-recognition-recognize':
+              recognize(payload);
+              break;
+            case 'matrix-recognition-train':
+              train(payload);
+              break;
+            case 'matrix-recognition-reset-tag':
+              resetTag(payload);
+              break;
+            case 'matrix-recognition-reset-all':
+              resetAll();
+              break;
+          }
         }
       });
     })

@@ -39,22 +39,39 @@ You need to put your amazon IoT device certificates inside folder `utils/certs`.
 
 The mirror sends MQTT commands through amazon IoT platform to the matrix board as explained below:
 
-* A command with topic `train` and payload `{tag: 'tag to be trained'}`:
+## How it works
 
-The matrix will reply with MQTT event with topic `recognition-trained` and payload `{status: 'success', results: data}` or  `{status: 'failed'}`.
+The mirror sends MQTT commands through amazon IoT platform to the matrix board as explained below:
 
-* A command with topic `recognize` and payload `{tag: 'tag to be recognized'}`
+* A command with topic `alya-commands` and payload like:
 
-The matrix will reply with MQTT event with topic `recognition-recognized` and payload `{status: 'success', results: data}` or  `{status: 'failed'}`.
+```json
+{
+"commandType": "matrix-recognition-recognize",
+"tag": "tag to be recognized"
+}
+```
 
-* A command with topic `resetTag` and payload `{tag: 'tag to be reset'}`
+Command types :
 
-The matrix will reply with MQTT event with topic `recognition-resetTag` and payload `{status: 'success', tags: data}` or  `{status: 'failed'}`.
+* `matrix-recognition-recognize` and `tag` to be recognized.
+* `matrix-recognition-reset-all` to rest all tags.
+* `matrix-recognition-reset-tag` and `tag` to be reset. 
+* `matrix-recognition-train` and `tag` to be trained.
+* `matrix-recognition-list-tags` to list all tags
 
-* A command with topic `resetAll` to rest all recognized tags.
+* Sensor data will be sent to topic `alya-data` and payload like:
 
-The matrix will reply with MQTT event with topic `recognition-resetAll` and payload `{status: 'success'}` or  `{status: 'failed'}`.
+```json
+"dataType": "matrix-recognition-recognize",
+"status": "success",
+"data": "{}"
+```
 
-* A command with topic `listTags` to list all recognized tags.
+Data types:
 
-The matrix will reply with MQTT event with topic `recognition-tags` and payload `{status: 'success', tags: data}` or  `{status: 'failed'}`.
+* `matrix-recognition-recognize` and `data` which is result of recognition.
+* `matrix-recognition-reset-all` and `data` which is result of reset.
+* `matrix-recognition-reset-tag` and `data` which is result of reset. 
+* `matrix-recognition-train` and `data` which is result of training.
+* `matrix-recognition-list-tags` and `data` which is result of all tags.
