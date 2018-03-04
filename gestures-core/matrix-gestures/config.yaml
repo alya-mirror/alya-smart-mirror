@@ -1,0 +1,14 @@
+configVersion: 2
+
+description: alya matrix gestures app
+keywords: alya
+name: matrix-gestures
+displayName: AlyaMatrixGestures
+
+services:
+  fistWatch:
+    engine: gesture
+    type: fist
+  palmWatch:
+    engine: gesture
+    type: palm

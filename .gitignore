@@ -36,3 +36,8 @@ sensors-data/matrix-sensor-data/node_modules/
 
 sensors-data/matrix-sensor-data/utils/certs/*
 !sensors-data/matrix-sensor-data/utils/certs/.gitkeep
+gestures-core/matrix-gestures/utils/certs/*
+!gestures-core/matrix-gestures/utils/certs/.gitkeep
+gestures-core/matrix-gestures/node_modules/
+
+
