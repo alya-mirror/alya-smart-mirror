@@ -47,11 +47,11 @@ function start() {
       try {
         matrix.service('palm').start().then((data) => {
           showColor('green');
-          sendIAWSIoTMessage('alya-data', {dataType: 'palm-detected', data: JSON.stringify(data)});
+          sendIAWSIoTMessage('alya-data', {dataType: 'matrix-palm-detected', data: JSON.stringify(data)});
         });
         matrix.service('fist').start().then((data) => {
           showColor('green');
-          sendIAWSIoTMessage('alya-data', {dataType: 'fist-detected', data: JSON.stringify(data)});
+          sendIAWSIoTMessage('alya-data', {dataType: 'matrix-fist-detected', data: JSON.stringify(data)});
         });
       } catch (error) {
         console.log('start - something went wrong, error: ' + error);

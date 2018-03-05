@@ -43,7 +43,7 @@ The matrix board will send events to topic `alya-data` whenever one of the follo
 
 ```json
 {
-"dataType": "fist-detected",
+"dataType": "matrix-fist-detected",
 "data": {"location":{"x":228,"y":79,"width":133,"height":133},"tag":"HAND_PALM"}
 }
 ```
@@ -52,7 +52,7 @@ The matrix board will send events to topic `alya-data` whenever one of the follo
 
 ```json
 {
-"dataType": "palm-detected",
+"dataType": "matrix-palm-detected",
 "data": {"location":{"x":228,"y":79,"width":133,"height":133},"tag":"HAND_PALM"}
 }
 ```

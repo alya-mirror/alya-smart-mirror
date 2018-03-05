@@ -86,7 +86,7 @@ updateSocket.on('message', function (wakeword_buffer) {
 
   // send to amazon IoT
   awsIoTClient.publish("alya-data", {
-    "dataType": "voice-command",
+    "dataType": "matrix-voice-command",
     "command": wakeWordData.wakeWord
   }, {}, function () {
     console.log(`message sent to IoT successfully, message: ${wakeWordData.wakeWord}`)
