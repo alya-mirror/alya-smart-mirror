@@ -169,7 +169,7 @@ function recognize(payload) {
               sendIAWSIoTMessage('alya-data', {
                 dataType: 'matrix-recognition-recognize',
                 status: 'success',
-                data: data
+                data: minDistanceFace.tags[0]
               });
             } else {
               console.log('recognize - not recognized');
