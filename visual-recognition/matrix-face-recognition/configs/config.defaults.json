@@ -6,8 +6,5 @@
     "clientId": "alya_smart_mirror",
     "region": "us-east-1",
     "host": "ak6hspilv9mrx.iot.us-east-1.amazonaws.com"
-  },
-  "matrixConfig": {
-    "refresh": 300000
   }
 }

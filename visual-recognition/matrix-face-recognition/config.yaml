@@ -1,0 +1,11 @@
+configVersion: 2
+
+description: alya face recognition
+keywords: alya
+name: matrix-face-recognition
+displayName: AlyaFaceRecognition
+
+services:
+  faceRecog:
+    engine: recognition
+    type: face

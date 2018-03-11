@@ -7,9 +7,9 @@ class IOTClient {
   connect(configs, clientId) {
     return new Promise((resolve, reject) => {
       this.device = awsIot.device({
-        keyPath: `./${configs.keyFileName}`,
-        certPath: `./${configs.certFileName}`,
-        caPath: `./${configs.caFileName}`,
+        keyPath: `${__dirname}/certs/${configs.keyFileName}`,
+        certPath: `${__dirname}/certs/${configs.certFileName}`,
+        caPath: `${__dirname}/certs/${configs.caFileName}`,
         clientId: clientId || configs.clientId,
         region: configs.region,
         host: configs.host
@@ -31,12 +31,21 @@ class IOTClient {
     });
   }
 
-  subscribe(topic, options, listenerFunction, caller) {
+  subscribe(topic, options) {
     this.device.subscribe(topic, options, () => {
       console.log("Subscribed: " + topic);
-      this.device.on('message', (topic, payload) => {
-        listenerFunction(topic, payload, caller);
-      });
+    });
+  }
+
+  unsubscribe(topic, options) {
+    this.device.unsubscribe(topic, options, () => {
+      console.log("UnSubscribed: " + topic);
+    });
+  }
+
+  onMessage(listenerFunction) {
+    this.device.on('message', (topic, payload) => {
+      listenerFunction(topic, payload);
     });
   }
 
