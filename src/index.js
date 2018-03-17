@@ -10,9 +10,9 @@ import {render} from 'react-dom'
 import './index.css';
 import App from './app/App';
 import registerServiceWorker from './registerServiceWorker';
-import ASMDateTime from 'asm-date-time'
+import ASMAnalogClock from '@alya-mirror/asm-analog-clock-addon'
 
 render(<App/>, document.getElementById('root'));
-render(<ASMDateTime/>, document.getElementById('root').appendChild(document.createElement("div")));
+render(<ASMAnalogClock/>, document.getElementById('root').appendChild(document.createElement("div")));
 
 registerServiceWorker();
