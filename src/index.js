@@ -13,12 +13,8 @@ import io from 'socket.io-client';
 import ReactDOM from 'react-dom';
 import ASMyoutube from '@alya-mirror/asm-youtube-addon'
 import ASManalogClock from '@alya-mirror/asm-analog-clock-addon'
-import ASMDateTime from 'asm-date-time'
+import ASMDateTime from '@alya-mirror/asm-date-time'
 import ASMGoogleImages from '@alya-mirror/asm-google-images-addon'
-
-
-render(<App/>, document.getElementById('root'));
-ReactDOM.unmountComponentAtNode(document.getElementById('root'));
 
 let socket = io('http://localhost:3100');
 socket.on('connect', function () {
