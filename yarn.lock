@@ -33,6 +33,18 @@
     react-analog-clock "^2.0.0"
     socket.io-client "^2.1.0"
 
+"@alya-mirror/asm-date-time@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@alya-mirror/asm-date-time/-/asm-date-time-0.0.2.tgz#ff926fd24de5e13ebee56bf6689f8f1c3f7106cc"
+  dependencies:
+    electron-is-dev "^0.3.0"
+    electron-log "^2.2.13"
+    electron-updater "^2.17.8"
+    moment "^2.20.1"
+    node-notifier "^5.1.2"
+    socket.io-client "^2.1.1"
+    w3-css "^4.1.0"
+
 "@alya-mirror/asm-google-images-addon@^0.0.2":
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/@alya-mirror/asm-google-images-addon/-/asm-google-images-addon-0.0.2.tgz#1da6bb4b1cc9e0f3f64392b679488c264f9dbb3a"
@@ -332,16 +344,6 @@ asar-integrity@0.2.3:
   dependencies:
     bluebird-lst "^1.0.5"
     fs-extra-p "^4.4.4"
-
-asm-date-time@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/asm-date-time/-/asm-date-time-0.0.3.tgz#4c9ceb83ecaa8102fc243cee0424e2ac0c2b179f"
-  dependencies:
-    electron-is-dev "^0.3.0"
-    electron-log "^2.2.13"
-    electron-updater "^2.17.8"
-    moment "^2.20.1"
-    node-notifier "^5.1.2"
 
 asn1.js@^4.0.0:
   version "4.9.2"
@@ -7791,6 +7793,10 @@ vm-browserify@0.0.4:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-0.0.4.tgz#5d7ea45bbef9e4a6ff65f95438e0a87c357d5a73"
   dependencies:
     indexof "0.0.1"
+
+w3-css@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/w3-css/-/w3-css-4.1.0.tgz#7872f2738d96a5732bac7718869151e3a5373ce4"
 
 wait-on@^2.0.2:
   version "2.0.2"

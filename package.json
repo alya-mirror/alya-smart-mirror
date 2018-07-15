@@ -36,9 +36,9 @@
   },
   "dependencies": {
     "@alya-mirror/asm-analog-clock-addon": "^0.0.3",
+    "@alya-mirror/asm-date-time": "^0.0.2",
     "@alya-mirror/asm-google-images-addon": "^0.0.2",
     "@alya-mirror/asm-youtube-addon": "^0.0.6",
-    "asm-date-time": "^0.0.3",
     "aws-iot-device-sdk": "^2.2.0",
     "electron-is-dev": "^0.3.0",
     "electron-log": "^2.2.13",
